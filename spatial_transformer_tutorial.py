@@ -38,6 +38,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.misc
 
+from street_view import get_filenames as get_street_view_filenames
+
+data_path = "street_view_data" # location where you want to save the data
+train_filenames, test_filenames = get_street_view_filenames(data_path)
+
+
 plt.ion()   # interactive mode
 
 ######################################################################
