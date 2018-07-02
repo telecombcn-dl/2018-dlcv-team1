@@ -1,3 +1,4 @@
 .vscode
 __pycache__
 street_view_data
+*.tmp
