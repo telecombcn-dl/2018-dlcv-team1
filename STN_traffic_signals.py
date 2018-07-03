@@ -58,7 +58,7 @@ class TrafficSignals(Dataset):
         # print(self.X_train)
 
     def __getitem__(self, index):
-        img = Image.open(self.X_train[index]).resize((28,28), resample=0)
+        img = Image.open(self.X_train[index]).resize((90,90), resample=0)
         if self.transform is not None:
              img = self.transform(img)
         label = int(self.y_train[index])
@@ -108,6 +108,7 @@ class TrafficSignals(Dataset):
 #train dataset loader
 dset_train = TrafficSignals(path_train, path_test, train=True, transform=transforms.Compose([
                        transforms.Grayscale(),
+                       transforms.RandomAffine(30),
                        transforms.ToTensor(),
                    ]))
 print(dset_train.__getitem__(1))
@@ -141,7 +142,7 @@ class Net(nn.Module):
         self.conv2 = nn.Conv2d(10, 20, kernel_size=5)
         self.conv2_drop = nn.Dropout2d()
         self.fc1 = nn.Linear(320, 50)
-        self.fc2 = nn.Linear(50, 10)
+        self.fc2 = nn.Linear(50, 43)
 
         # Spatial transformer localization-network
         self.localization = nn.Sequential(
@@ -208,7 +209,6 @@ optimizer = optim.SGD(model.parameters(), lr=0.01)
 def train(epoch):
     model.train()
     for batch_idx, (data, target) in enumerate(train_loader):
-        print('object:', data)
         data, target = data.to(device), target.to(device)
         optimizer.zero_grad()
         output = model(data)

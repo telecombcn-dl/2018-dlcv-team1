@@ -38,11 +38,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.misc
 
-from street_view import get_filenames as get_street_view_filenames
-
-data_path = "street_view_data" # location where you want to save the data
-train_filenames, test_filenames = get_street_view_filenames(data_path)
-
 
 plt.ion()   # interactive mode
 
@@ -58,14 +53,16 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Training dataset
 train_loader = torch.utils.data.DataLoader(
-    datasets.MNIST(root='.', train=True, download=True,
+    datasets.MNIST(root='./datasets', train=True, download=True,
                    transform=transforms.Compose([
+                       transforms.RandomAffine(45),
                        transforms.ToTensor(),
                        transforms.Normalize((0.1307,), (0.3081,))
                    ])), batch_size=64, shuffle=True, num_workers=4)
 # Test dataset
 test_loader = torch.utils.data.DataLoader(
-    datasets.MNIST(root='.', train=False, transform=transforms.Compose([
+    datasets.MNIST(root='./datasets', train=False, transform=transforms.Compose([
+        transforms.RandomAffine(45),
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,))
     ])), batch_size=64, shuffle=True, num_workers=4)
@@ -137,7 +134,7 @@ class Net(nn.Module):
 
     def forward(self, x):
         # transform the input
-        x = self.stn(x)
+        # x = self.stn(x)
 
         # Perform the usual forward pass
         x = F.relu(F.max_pool2d(self.conv1(x), 2))
