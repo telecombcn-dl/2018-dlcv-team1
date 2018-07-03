@@ -6,3 +6,7 @@ data
 test_32x32.mat
 train_32x32.mat
 datasets
+in_grid.png
+in_grid_img.png
+out_grid.png
+out_grid_img.png
