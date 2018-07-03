@@ -58,7 +58,7 @@ class TrafficSignals(Dataset):
         # print(self.X_train)
 
     def __getitem__(self, index):
-        img = Image.open(self.X_train[index]).resize((32,32), resample=0)
+        img = Image.open(self.X_train[index]).resize((28,28), resample=0)
         if self.transform is not None:
              img = self.transform(img)
         label = int(self.y_train[index])
@@ -167,7 +167,8 @@ class Net(nn.Module):
     # Spatial transformer network forward function
     def stn(self, x):
         xs = self.localization(x)
-        xs = xs.view(xs.size(0), -1)
+        # xs = xs.view(xs.size(0), -1)
+        xs = xs.view(-1, 90)
         theta = self.fc_loc(xs)
         theta = theta.view(-1, 2, 3)
 
