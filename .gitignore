@@ -2,3 +2,6 @@
 __pycache__
 street_view_data
 *.tmp
+data
+test_32x32.mat
+train_32x32.mat
