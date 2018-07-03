@@ -65,14 +65,14 @@ train_loader = torchvision.datasets.SVHN(root='.', split='train',
             transforms.Resize((32, 32)),
             transforms.ToTensor(),
             transforms.Normalize((0.1307,), (0.3081,))
-        ]),
-        target_transform=transforms.Compose([
-            transforms.ToTensor(),
-            transforms.ToPILImage(),
-            transforms.Resize((32, 32)),
-            transforms.ToTensor(),
-            transforms.Normalize((0.1307,), (0.3081,))
         ]), download=True)
+        #target_transform=transforms.Compose([
+        #    transforms.ToTensor(),
+        #    transforms.ToPILImage(),
+        #    transforms.Resize((32, 32)),
+        #    transforms.ToTensor(),
+        #    transforms.Normalize((0.1307,), (0.3081,))
+        #]), download=True)
 
 # Test dataset
 test_loader = torchvision.datasets.SVHN(root='.', split='test',
@@ -187,7 +187,7 @@ optimizer = optim.SGD(model.parameters(), lr=0.01)
 def train(epoch):
     model.train()
     for batch_idx, (data, target) in enumerate(train_loader):
-        data, target = data.to(device), target.to(device)
+        #data, target = data.to(device), target.to(device)
         optimizer.zero_grad()
         output = model(data)
         loss = F.nll_loss(output, target)
@@ -208,7 +208,7 @@ def test():
         test_loss = 0
         correct = 0
         for data, target in test_loader:
-            data, target = data.to(device), target.to(device)
+            #data, target = data.to(device), target.to(device)
             output = model(data)
 
             # sum up batch loss
