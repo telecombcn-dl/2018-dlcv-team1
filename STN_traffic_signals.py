@@ -219,7 +219,7 @@ def train(epoch):
     #     optimizer.zero_grad()
     #     output = model(data)
 
-        loss = F.nll_loss(output, label)
+        loss = F.nll_loss(output, target)
         loss.backward()
         optimizer.step()
         if batch_idx % 500 == 0:
