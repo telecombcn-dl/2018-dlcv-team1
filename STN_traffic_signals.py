@@ -58,7 +58,7 @@ class TrafficSignals(Dataset):
         # print(self.X_train)
 
     def __getitem__(self, index):
-        img = Image.open(self.X_train[index]).resize((90,90), resample=0)
+        img = Image.open(self.X_train[index]).resize((28,28), resample=0)
         if self.transform is not None:
              img = self.transform(img)
         label = int(self.y_train[index])
@@ -108,7 +108,7 @@ class TrafficSignals(Dataset):
 #train dataset loader
 dset_train = TrafficSignals(path_train, path_test, train=True, transform=transforms.Compose([
                        transforms.Grayscale(),
-                       transforms.RandomAffine(30),
+                       transforms.RandomAffine(45),
                        transforms.ToTensor(),
                    ]))
 print(dset_train.__getitem__(1))
@@ -122,6 +122,7 @@ train_loader = torch.utils.data.DataLoader(dset_train,
 #test dataset loader
 dset_test = TrafficSignals(path_train, path_test, transform=transforms.Compose([
                        transforms.Grayscale(),
+                    transforms.RandomAffine(45),
                        transforms.ToTensor(),
                    ]))
 test_loader = torch.utils.data.DataLoader(dset_test,
@@ -300,14 +301,6 @@ def visualize_stn():
                                      pad_value=0)
 
 
-        # # Plot the results side-by-side
-        # f, axarr = plt.subplots(1, 2)
-        # axarr[0].imshow(in_grid)
-        # axarr[0].set_title('Dataset Images')
-        #
-        # axarr[1].imshow(out_grid)
-        # axarr[1].set_title('Transformed Images')
-
 
 for epoch in range(1, 20 + 1):
     train(epoch)
@@ -320,80 +313,3 @@ visualize_stn()
 # plt.ioff()
 # plt.show()
 
-
-## ___________LOADER 2__________________
-# def readTrafficSigns(rootpath, train_set=False):
-#     '''Reads traffic sign data for German Traffic Sign Recognition Benchmark.
-#
-#     Arguments: path to the traffic sign data, for example './GTSRB/Training'
-#     Returns:   list of images, list of corresponding labels'''
-#     images = [] # images
-#     labels = [] # corresponding labels
-#     # loop over all 42 classes
-#     if train_set:
-#
-#         for c in range(0,43):
-#             prefix = rootpath + '/' + format(c, '05d') + '/' # subdirectory for class
-#             gtFile = open(prefix + 'GT-'+ format(c, '05d') + '.csv') # annotations file
-#             gtReader = csv.reader(gtFile, delimiter=';') # csv parser for annotations file
-#             next(gtReader) # skip header
-#             print(gtReader)
-#         # loop over all images in current annotations file
-#             for row in gtReader:
-#                 images.append(plt.imread(prefix + row[0])) # the 1th column is the filename
-#                 labels.append(row[7]) # the 8th column is the label
-#             gtFile.close()
-#
-#     else:
-#         prefix = rootpath + '/' # subdirectory for class
-#         gtFile = open(prefix + 'GT-final_test.csv') # annotations file
-#         gtReader = csv.reader(gtFile, delimiter=';')  # csv parser for annotations file
-#         next(gtReader) # skip header
-#         # loop over all images in current annotations file
-#         for row in gtReader:
-#             images.append(plt.imread(prefix + row[0]))  # the 1th column is the filename
-#             labels.append(row[7])  # the 8th column is the label
-#         gtFile.close()
-#         return images, labels
-#
-# class TrafficSignsDataset(Dataset):
-#     def __init__(self, images, labels, transform=None):
-#         self.images = torch.from_numpy(images)
-#         self.images = self.images.permute(0, 3, 1, 2)
-#         self.labels = torch.LongTensor(labels.argmax(1))
-#         self.transform = transform
-#
-#     def __len__(self):
-#         return len(self.images)
-#
-#     def __getitem__(self, index):
-#         return self.images[index], self.labels[index]
-#
-# ##
-#
-#
-# X_train_np, y_train_np = readTrafficSigns(path_train, train_set=True)
-# [X_test_np, y_test_np] = readTrafficSigns(path_test)
-#
-# #train dataset loader
-# dset_train = TrafficSignsDataset(X_train_np, y_train_np, transform=transforms.Compose([
-#                        transforms.ToTensor(),
-#                        transforms.Normalize((0.1307,), (0.3081,))
-#                    ]))
-# train_loader = DataLoader(dset_train,
-#                           batch_size=64,
-#                           shuffle=True,
-#                           num_workers=4
-#                          # pin_memory=True # CUDA only
-#                          )
-# #test dataset loader
-# dset_test = TrafficSignsDataset(X_test_np, y_test_np, transform=transforms.Compose([
-#                        transforms.ToTensor(),
-#                        transforms.Normalize((0.1307,), (0.3081,))
-#                    ]))
-# test_loader = DataLoader(dset_test,
-#                           batch_size=64,
-#                           shuffle=True,
-#                           num_workers=4
-#                          # pin_memory=True # CUDA only
-#                          )
