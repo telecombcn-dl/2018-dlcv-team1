@@ -61,7 +61,7 @@ class TrafficSignals(Dataset):
         img = Image.open(self.X_train[index]).resize((32,32), resample=0)
         if self.transform is not None:
              img = self.transform(img)
-        label = self.y_train[index]
+        label = int(self.y_train[index])
 
         return img, label
 
@@ -109,7 +109,6 @@ class TrafficSignals(Dataset):
 dset_train = TrafficSignals(path_train, path_test, train=True, transform=transforms.Compose([
                        transforms.Grayscale(),
                        transforms.ToTensor(),
-                       transforms.Normalize((0.1307,), (0.3081,))
                    ]))
 print(dset_train.__getitem__(1))
 train_loader = torch.utils.data.DataLoader(dset_train,
@@ -123,7 +122,6 @@ train_loader = torch.utils.data.DataLoader(dset_train,
 dset_test = TrafficSignals(path_train, path_test, transform=transforms.Compose([
                        transforms.Grayscale(),
                        transforms.ToTensor(),
-                       transforms.Normalize((0.1307,), (0.3081,))
                    ]))
 test_loader = torch.utils.data.DataLoader(dset_test,
                           batch_size=64,
@@ -134,46 +132,6 @@ test_loader = torch.utils.data.DataLoader(dset_test,
 
 
 print('train_loader enumerate: ',enumerate(train_loader))
-
-
-
-
-
-# # Training dataset
-# train_loader = torch.utils.data.DataLoader(
-#     datasets.MNIST(root='.', train=True, download=True,
-#                    transform=transforms.Compose([
-#                        transforms.ToTensor(),
-#                        transforms.Normalize((0.1307,), (0.3081,))
-#                    ])), batch_size=64, shuffle=True, num_workers=4)
-# # Test dataset
-# test_loader = torch.utils.data.DataLoader(
-#     datasets.MNIST(root='.', train=False, transform=transforms.Compose([
-#         transforms.ToTensor(),
-#         transforms.Normalize((0.1307,), (0.3081,))
-#     ])), batch_size=64, shuffle=True, num_workers=4)
-
-######################################################################
-# Depicting spatial transformer networks
-# --------------------------------------
-#
-# Spatial transformer networks boils down to three main components :
-#
-# -  The localization network is a regular CNN which regresses the
-#    transformation parameters. The transformation is never learned
-#    explicitly from this dataset, instead the network learns automatically
-#    the spatial transformations that enhances the global accuracy.
-# -  The grid generator generates a grid of coordinates in the input
-#    image corresponding to each pixel from the output image.
-# -  The sampler uses the parameters of the transformation and applies
-#    it to the input image.
-#
-# .. figure:: /_static/img/stn/stn-arch.png
-#
-# .. Note::
-#    We need the latest version of PyTorch that contains
-#    affine_grid and grid_sample modules.
-#
 
 
 class Net(nn.Module):
