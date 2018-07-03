@@ -167,7 +167,7 @@ class Net(nn.Module):
     # Spatial transformer network forward function
     def stn(self, x):
         xs = self.localization(x)
-        xs = xs.view(-1, 10 * 3 * 3)
+        xs = xs.view(xs.size(0), -1)
         theta = self.fc_loc(xs)
         theta = theta.view(-1, 2, 3)
 
