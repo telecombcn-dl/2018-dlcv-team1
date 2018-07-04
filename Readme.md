@@ -10,7 +10,7 @@ Original code from Pytorch tutorial: https://pytorch.org/tutorials/intermediate/
 
 Provided code's goal is to learn how to perform spatial transformations of the input image in order to preserve, as much as possible, the geometrical invariance of the model.
 
-![alt text](https://github.com/telecombcn-dl/2018-dlcv-team1/STmodel.png "Spatial Transformers Classification Network")
+(https://github.com/telecombcn-dl/2018-dlcv-team1/STmodel.png "Spatial Transformers Classification Network")
 
 # Playing with other Datasets
 
