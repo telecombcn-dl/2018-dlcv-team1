@@ -12,6 +12,6 @@ Provided code's goal is to learn how to perform spatial transformations of the i
 
 ![ST Model](https://github.com/telecombcn-dl/2018-dlcv-team1/blob/master/STmodel.png "Spatial Transformers Classification Network")
 
-# Playing with other Datasets
+# Results with Datasets
 
 Applying STNet to distorted images improved the classification results by 3% with MNIST dataset & 5% with GTSRB dataset. 
