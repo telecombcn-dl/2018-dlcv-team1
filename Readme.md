@@ -8,10 +8,8 @@ Team 1 is formed by Armand Comas, Victor Aubin & Guillem París
 
 Original code from Pytorch tutorial: https://pytorch.org/tutorials/intermediate/spatial_transformer_tutorial.html
 
-Edits based on DeepMind Paper: https://arxiv.org/abs/1506.02025
-
 Provided code's goal is to learn how to perform spatial transformations of the input image in order to preserve, as much as possible, the geometrical invariance of the model.
 
 # Playing with other Datasets
 
-...  
+Applying STNet to distorted images improved the classification results by 3% with MNIST dataset & 5% with GTSRB dataset. 
